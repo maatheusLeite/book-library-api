@@ -13,6 +13,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,18 +38,22 @@ public class Book implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private LoanStatus status;
 	
+	@ManyToOne
+	@JoinColumn(name = "tb_user")
+	private User loanedTo;
+	
 	public Book() {
 	}
 
-	public Book(Integer id, String name, String author, String description, Date publicationDate, Integer pages,
-			LoanStatus status) {
+	public Book(Integer id, String name, String author, String description, Date publicationDate, Integer pages) {
 		this.id = id;
 		this.name = name;
 		this.author = author;
 		this.description = description;
 		this.publicationDate = publicationDate;
 		this.pages = pages;
-		this.status = status;
+		this.status = LoanStatus.AVAILABLE;
+		this.loanedTo = null;
 	}
 
 	public Integer getId() {
@@ -104,6 +110,14 @@ public class Book implements Serializable {
 
 	public void setStatus(LoanStatus status) {
 		this.status = status;
+	}
+
+	public User getLoanedTo() {
+		return loanedTo;
+	}
+
+	public void setLoanedTo(User loanedTo) {
+		this.loanedTo = loanedTo;
 	}
 
 	@Override

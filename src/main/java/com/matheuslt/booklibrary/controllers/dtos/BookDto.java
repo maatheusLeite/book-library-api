@@ -2,6 +2,8 @@ package com.matheuslt.booklibrary.controllers.dtos;
 
 import java.util.Date;
 
+import com.matheuslt.booklibrary.models.User;
+
 public class BookDto {
 	
 	private String name;
@@ -9,16 +11,19 @@ public class BookDto {
 	private String description;
 	private Date publicationDate;
 	private Integer pages;
+	private User loanedTo;
+	
 	
 	public BookDto() {
 	}
 
-	public BookDto(String name, String author, String description, Date publicationDate, Integer pages) {
+	public BookDto(String name, String author, String description, Date publicationDate, Integer pages, User loanedTo) {
 		this.name = name;
 		this.author = author;
 		this.description = description;
 		this.publicationDate = publicationDate;
 		this.pages = pages;
+		this.loanedTo = loanedTo;
 	}
 
 	public String getName() {
@@ -26,7 +31,7 @@ public class BookDto {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name; 
 	}
 
 	public String getAuthor() {
@@ -59,5 +64,13 @@ public class BookDto {
 
 	public void setPages(Integer pages) {
 		this.pages = pages;
+	}
+
+	public User getLoanedTo() {
+		return loanedTo;
+	}
+
+	public void setLoanedTo(User loanedTo) {
+		this.loanedTo = loanedTo;
 	}
 }

@@ -1,12 +1,15 @@
 package com.matheuslt.booklibrary.models;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.matheuslt.booklibrary.models.enums.Role;
 
 import jakarta.persistence.Column;
@@ -16,6 +19,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -36,6 +40,10 @@ public class User implements UserDetails, Serializable {
 	private String password;
 	@Enumerated(EnumType.STRING)
 	private Role role;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "loanedTo")
+	private List<Book> booksTaken = new ArrayList<>();
 	
 	public User() {
 	}
@@ -65,7 +73,7 @@ public class User implements UserDetails, Serializable {
 		this.firstName = firstName;
 	}
 
-	public String getLastname() {
+	public String getLastName() {
 		return lastName;
 	}
 
@@ -101,6 +109,10 @@ public class User implements UserDetails, Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public List<Book> getBooksTaken() {
+		return booksTaken;
 	}
 
 	@Override
